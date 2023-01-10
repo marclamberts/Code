@@ -1,0 +1,51 @@
+import matplotlib.pyplot as plt
+
+# Assume that you have a list of player dictionaries, where each dictionary contains information about a player
+players = [{"name": "Player 1", "stats": [10, 20, 15, 17]},
+           {"name": "Player 2", "stats": [5, 25, 17, 20]},
+           {"name": "Player 3", "stats": [15, 10, 7, 18]}]
+
+# Find the player that you want to compare with the others
+reference_player = players[0]
+
+# Extract the stats of the reference player
+reference_stats = reference_player["stats"]
+
+# Initialize a list to store the similarity scores
+similarity_scores = []
+
+# Iterate through the other players and calculate the similarity score with the reference player
+for player in players[1:]:
+    stats = player["stats"]
+    similarity_score = sum([(x - y) ** 2 for x, y in zip(reference_stats, stats)])
+    similarity_scores.append(similarity_score)
+
+# Find the player with the lowest similarity score (most similar to the reference player)
+min_index = similarity_scores.index(min(similarity_scores))
+most_similar_player = players[min_index + 1]
+
+# Print the name of the most similar player
+print(f"The most similar player to {reference_player['name']} is {most_similar_player['name']}")
+
+# Plot the stats of the reference player and the most similar player
+plt.plot(reference_stats, label=reference_player["name"])
+plt.plot(most_similar_player["stats"], label=most_similar_player["name"])
+plt.legend()
+plt.show()
+-------------------------------------------------------------------------------
+
+import matplotlib.pyplot as plt
+import pandas as pd
+
+# Load the data for the players
+players_data = pd.read_csv("players.csv")
+
+# Select the attributes that you want to use to compare the players
+attributes = ["height", "weight", "age", "points_per_game"]
+
+# Calculate the correlation matrix for the attributes
+corr_matrix = players_data[attributes].corr()
+
+# Plot the scatterplot for the attributes
+plt.scatter(players_data[attributes])
+plt.show()
